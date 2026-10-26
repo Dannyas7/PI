@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lector Excel</title>
+
+<style>
+body{
+    font-family: Arial, sans-serif;
+    margin:40px;
+    background:#f4f4f4;
+}
+
+h1{
+    color:#0078d4;
+}
+
+table{
+    border-collapse: collapse;
+    width:100%;
+    background:white;
+    margin-top:20px;
+}
+
+th,td{
+    border:1px solid #ddd;
+    padding:8px;
+}
+
+th{
+    background:#0078d4;
+    color:white;
+}
+
+input{
+    margin:20px 0;
+}
+</style>
+
+</head>
+<body>
+
+<h1>📊 Lector de Excel</h1>
+
+<input type="file" id="excelFile" accept=".xlsx,.xls">
+
+<div id="tabla"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+<script>
+
+document.getElementById('excelFile').addEventListener('change', leerExcel);
+
+function leerExcel(e){
+
+    const archivo = e.target.files[0];
+
+    const lector = new FileReader();
+
+    lector.onload = function(event){
+
+        const datos = new Uint8Array(event.target.result);
+
+        const workbook = XLSX.read(datos,{type:'array'});
+
+        const hoja = workbook.Sheets[workbook.SheetNames[0]];
+
+        const json = XLSX.utils.sheet_to_json(hoja,{header:1});
+
+        let html = "<table>";
+
+        json.forEach((fila,index)=>{
+
+            html += "<tr>";
+
+            fila.forEach(celda=>{
+
+                if(index===0){
+                    html += `<th>${celda}</th>`;
+                }else{
+                    html += `<td>${celda}</td>`;
+                }
+
+            });
+
+            html += "</tr>";
+        });
+
+        html += "</table>";
+
+        document.getElementById("tabla").innerHTML = html;
+    };
+
+    lector.readAsArrayBuffer(archivo);
+}
+
+</script>
+
+</body>
+</html>
