@@ -1,0 +1,16 @@
+# Batalla CIO Online V9 - servicio Node.js gratuito para Render
+# El frontend se sigue alojando en GitHub Pages.
+services:
+  - type: web
+    name: batalla-cio-online-v9
+    runtime: node
+    plan: free
+    buildCommand: npm install --prefix server --omit=dev
+    startCommand: node server/index.mjs
+    healthCheckPath: /health
+    autoDeployTrigger: commit
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: ALLOWED_ORIGINS
+        value: https://dannyas7.github.io,null

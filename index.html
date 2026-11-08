@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="es"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,maximum-scale=1,user-scalable=no"><meta name="theme-color" content="#080c19"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><title>BATALLA CIO — ARCADE V10 ONLINE POLISH</title>
+<link rel="manifest" href="manifest.webmanifest"><link rel="stylesheet" href="style.css"></head><body>
+<main id="app" class="app">
+  <section id="menu" class="screen screen-home" aria-label="Modo de juego">
+    <div class="home-bg"></div><div class="scanlines" aria-hidden="true"></div>
+    <div class="topline"><span class="topline-code">DIVISIÓN SALVADOR <i></i> CÓDIGO CIO</span><span class="topline-version">ONLINE · V10</span></div>
+    <div class="home-content">
+      <div class="logo-area"><div class="logo-spark">◈ JUEGO DE COMBATE ◈</div><h1>BATALLA <strong>CIO</strong></h1><p class="logo-sub">EL TURNO MÁS BRAVO DE ATACAMA</p><div class="logo-rule"></div><p class="home-desc">Seis operadores. Una sola victoria. ¿Quién manda en la sala?</p></div>
+      <div class="mode-panel"><div class="eyecatch">01 / SELECCIONA TU MODO</div>
+        <div class="mode-switch"><button type="button" class="mode" data-mode="online"><span class="mode-icon">🌐</span><span><strong>ONLINE 1 VS 1</strong><small>Sala privada con código</small></span><span class="mode-chevron">›</span></button><button type="button" class="mode active" data-mode="cpu"><span class="mode-icon">◉</span><span><strong>ARCADE</strong><small>1 jugador · contra CPU</small></span><span class="mode-chevron">›</span></button><button type="button" class="mode" data-mode="versus"><span class="mode-icon">⚔</span><span><strong>VERSUS LOCAL</strong><small>2 jugadores · teclado o mandos</small></span><span class="mode-chevron">›</span></button></div>
+        <div id="cpu-options" class="cpu-options"><span>DIFICULTAD</span><div class="difficulty-switch"><button data-difficulty="facil" type="button">FÁCIL</button><button data-difficulty="normal" class="active" type="button">NORMAL</button><button data-difficulty="dificil" type="button">DIFÍCIL</button></div></div>
+        <div class="fullscreen-entry"><button type="button" id="home-fullscreen" class="btn btn-outline">⛶ PANTALLA COMPLETA</button><span id="fullscreen-hint" role="status">Recomendado en teléfono horizontal. El navegador puede pedir confirmación.</span></div>
+        <button type="button" id="nav-next" class="btn btn-gold">ELEGIR LUCHADOR <span>→</span></button>
+      </div>
+    </div>
+    <div class="home-footer"><span>V10 · ONLINE</span><button type="button" id="help-button" class="text-button">CONTROLES Y AYUDA ⓘ</button><span>HECHO PARA JUGAR</span></div>
+  </section>
+
+  <section id="online-screen" class="screen screen-online hidden" aria-label="Sala multijugador online">
+    <header class="screen-header"><button type="button" id="online-back" class="header-back" aria-label="Volver al menú">‹</button><div><span class="section-number">02 / MULTIJUGADOR</span><h2>BATALLA CIO · SALAS ONLINE</h2></div><span class="screen-header-right">V10</span></header>
+    <div class="online-layout">
+      <div class="online-panel online-room-panel">
+        <div class="online-panel-heading"><span class="eyecatch">⚡ CONEXIÓN AUTOMÁTICA</span><span class="server-pill" id="online-connection-pill">SERVIDOR OFICIAL</span></div>
+        <p class="online-intro">Crea una sala privada o entra con el código que te envíe tu rival.</p>
+        <div class="online-connect">
+          <button type="button" id="online-create" class="btn btn-gold">✚ CREAR SALA</button>
+          <div class="online-join-row"><input id="online-code" maxlength="8" placeholder="CÓDIGO" aria-label="Código de sala" autocapitalize="characters" autocomplete="off" spellcheck="false" inputmode="text"><button type="button" id="online-join" class="btn btn-outline">UNIRSE ↗</button></div>
+        </div>
+        <div class="online-room-info" aria-live="polite"><div class="room-label-line"><span class="eyecatch">ESTADO DE SALA</span><button type="button" id="online-copy-code" class="online-copy hidden">COPIAR CÓDIGO</button></div><strong id="online-room-label">SIN CONECTAR</strong><p id="online-status" role="status">El servidor se conecta automáticamente al crear o unirse a una sala.</p></div>
+        <p class="online-help">Si el servidor gratuito está inactivo puede tardar cerca de un minuto en despertar. Conserva la pantalla abierta.</p>
+      </div>
+      <div class="online-panel online-fighter-panel"><div class="online-panel-heading"><span class="eyecatch">TU LUCHADOR</span><span class="roster-available">6 DISPONIBLES</span></div>
+        <div class="online-roster" id="online-roster"></div>
+        <div class="online-fighter-footer">
+          <div class="online-meta-row"><label for="online-stage">ARENA <small>LA ELIGE EL ANFITRIÓN</small></label><select id="online-stage"><option value="pampa">PAMPA</option><option value="concentradora">PLANTA CONCENTRADORA</option><option value="cio">SALA CIO</option></select></div>
+          <div class="online-player-state"><span id="online-player1">J1: ESPERANDO</span><span id="online-player2">J2: ESPERANDO</span></div>
+          <button type="button" id="online-ready" class="btn btn-gold" disabled>ESTOY LISTO ✓</button>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section id="fighter-screen" class="screen screen-select hidden" aria-label="Selecciona luchador">
+    <div class="select-backdrop"></div><header class="screen-header"><button type="button" id="fighter-back" class="header-back" aria-label="Volver">‹</button><div><span class="section-number">02 / ROSTER</span><h2 id="fighter-screen-title">SELECCIONA TU LUCHADOR</h2></div><span class="screen-header-right" id="fighter-side">JUGADOR 1</span></header>
+    <div class="roster-layout"><div class="fighter-feature">
+        <div class="feature-image-wrap"><img id="focus-portrait" class="feature-image" src="assets/portraits/daniel.webp" alt="Retrato del luchador seleccionado"><div class="feature-image-sheen"></div><span id="focus-new" class="feature-new hidden">NUEVO</span></div>
+        <div class="feature-info"><span class="feature-label">L U C H A D O R &nbsp; S E L E C C I O N A D O</span><h3 id="focus-name">DANIEL</h3><p id="focus-tag">CONTROL DE PROCESOS</p><div class="feature-divider"></div><span>ATAQUE ESPECIAL</span><strong id="focus-special">EMBESTIDA CIO</strong><div class="stat-rows"><div>FUERZA <i id="stat-power"></i></div><div>VELOCIDAD <i id="stat-speed"></i></div></div></div>
+      </div><div class="roster-side"><div class="roster-top"><span id="roster-player-label">JUGADOR 1</span><small>6 DISPONIBLES</small></div><div id="chars1" class="roster"></div><div id="chars2" class="roster hidden"></div><div class="roster-tip">SELECCIONA UN RETRATO PARA VER SUS HABILIDADES</div><div class="roster-actions"><button type="button" id="roster-next" class="btn btn-gold">CONFIRMAR <span>→</span></button></div></div></div>
+    <div class="screen-bottom"><span>BATALLA CIO V10</span><span>LOS ESPECIALES CONSUMEN 50 DE ENERGÍA</span></div>
+  </section>
+
+  <section id="stage-screen" class="screen screen-stage hidden" aria-label="Selección de escenario">
+    <div class="stage-ambient" id="stage-ambient"></div><header class="screen-header"><button type="button" id="stage-back" class="header-back" aria-label="Volver">‹</button><div><span class="section-number">03 / ESCENARIO</span><h2>ELIGE TU CAMPO DE BATALLA</h2></div><span class="screen-header-right">EL SALVADOR</span></header>
+    <div class="stage-content"><div class="stage-feature"><img id="stage-hero" alt="Vista del escenario" src="assets/stages/pampa.png"><div class="stage-feature-overlay"><span>ARENA SELECCIONADA</span><h3 id="stage-title">PAMPA</h3><p id="stage-description">DESIERTO DE ATACAMA</p></div></div><div class="stage-picker"><div class="eyecatch">ELIGE UNA ARENA</div><div id="stages" class="stage-grid"></div><div class="stage-summary"><span id="summary-p1">DANIEL</span><strong>VS</strong><span id="summary-p2">PANCHO</span></div><button type="button" id="start" class="btn btn-gold">INICIAR COMBATE <span>⚡</span></button></div></div>
+    <div class="screen-bottom"><span>PAMPA · PLANTA CONCENTRADORA · SALA CIO</span><span>ELIGE TU DESTINO</span></div>
+  </section>
+
+  <section id="vs-screen" class="screen screen-vs hidden" aria-label="Presentación versus"><div class="vs-stage-back" id="vs-stage-back"></div><div class="vs-rays"></div><p class="vs-top">BATALLA CIO <span>ENFRENTAMIENTO</span></p><div class="vs-content"><div class="vs-person"><img id="vs-p1" alt="Jugador uno"><strong id="vs-name1">DANIEL</strong><small>JUGADOR 1</small></div><div class="vs-core"><span>VS</span><small>EL TURNO DECIDE</small></div><div class="vs-person right"><img id="vs-p2" alt="Jugador dos"><strong id="vs-name2">PANCHO</strong><small id="vs-rival-type">CPU</small></div></div><div class="vs-footer"><div class="vs-stage-name" id="vs-stage-name">PAMPA · DESIERTO DE ATACAMA</div><div class="loading-track"><i id="loading-progress"></i></div><p id="loading-text" role="status">PREPARANDO LA ARENA…</p><small id="vs-abilities">LUCHADORES LISTOS PARA EL TURNO</small></div></section>
+
+  <section id="arena" class="screen screen-fight hidden" aria-label="Combate">
+    <header class="hud"><div class="fighter-hud"><div class="portrait" id="portrait1"></div><div class="hud-info"><div class="name-line"><b id="name1">DANIEL</b><small id="tag1">CONTROL DE PROCESOS</small></div><div class="health"><i id="health1"></i></div><div class="hud-sub"><div class="meter"><i id="meter1"></i></div><div class="guard-bar"><i id="guard1"></i></div></div></div></div>
+    <div class="round-info"><small id="round-label">RONDA 1</small><strong id="timer">90</strong><div class="win-score"><span id="score1">○○</span><span id="score2">○○</span></div><small id="status">¡PELEEN!</small></div>
+    <div class="fighter-hud right"><div class="hud-info"><div class="name-line"><b id="name2">PANCHO</b><small id="tag2">MAESTRO DEL CONTRAATAQUE</small></div><div class="health"><i id="health2"></i></div><div class="hud-sub"><div class="meter"><i id="meter2"></i></div><div class="guard-bar"><i id="guard2"></i></div></div></div><div class="portrait" id="portrait2"></div></div>
+    <div class="game-actions"><button type="button" id="fullscreen-button" title="Pantalla completa" aria-label="Pantalla completa">⛶</button><button type="button" id="mute-button" title="Sonido" aria-label="Alternar sonido">♪</button><button type="button" id="pause-button" title="Pausar">Ⅱ</button></div></header>
+    <div class="fight-workspace">
+      <div class="game-wrap"><canvas id="game" width="960" height="540" aria-label="Pantalla de combate">Tu navegador no admite canvas.</canvas><div class="mobile-rotate-note">↻ Gira el teléfono para una experiencia más amplia</div></div>
+      <div id="touch-controls" class="touch-controls hidden" aria-label="Controles táctiles de combate">
+        <div id="joystick-zone" class="analog-zone touch-movement" role="group" aria-label="Joystick analógico: deslizar para moverse, arriba para saltar y abajo para agacharse"><div class="analog-face"><span class="analog-arrow top">▴</span><span class="analog-arrow left">◂</span><div id="joystick-thumb" class="analog-thumb"></div><span class="analog-arrow right">▸</span><span class="analog-arrow bottom">▾</span></div><small>MOVER</small></div>
+        <div class="touch-actions" aria-label="Botones de combate">
+          <button type="button" data-touch="quick" class="float-btn jab" aria-label="Golpe rápido"><span>J</span><small>JAB</small></button>
+          <button type="button" data-touch="heavy" class="float-btn heavy" aria-label="Golpe fuerte"><span>F</span><small>FUERTE</small></button>
+          <button type="button" data-touch="kick" class="float-btn kick" aria-label="Patada"><span>P</span><small>PATADA</small></button>
+          <button type="button" data-touch="guard" class="float-btn guard" aria-label="Bloquear"><span>⬡</span><small>BLOQ</small></button>
+          <button type="button" data-touch="special" class="float-btn special" aria-label="Especial"><span>⚡</span><small>ESPECIAL</small></button>
+          <button type="button" data-touch="jump" class="float-btn jump" aria-label="Saltar"><span>↑</span><small>SALTO</small></button>
+          <button type="button" data-touch="dash" class="float-btn dash" aria-label="Desplazamiento rápido"><span>»</span><small>DASH</small></button>
+        </div>
+        </div>
+    </div>
+    <footer class="bottom-hud"><span id="special1">EMBESTIDA CIO</span><strong id="combo"></strong><span id="special2">GANCHO VELOZ</span></footer>
+    <div class="ko-burst hidden" id="ko-burst" aria-live="polite"><span>K.O.</span><small>¡FIN DE RONDA!</small></div><div class="fight-overlay hidden" id="overlay"><div class="result-card"><div class="result-eyebrow" id="result-kicker">FIN DE COMBATE</div><h2 id="result-title" class="victory-title">¡VICTORIA!</h2><p id="result-sub">La operación continúa.</p><div class="result-actions"><button type="button" id="rematch" class="btn btn-gold">REVANCHA ↻</button><button type="button" id="back-menu" class="btn btn-outline">CAMBIAR LUCHADORES</button></div></div></div>
+    <div class="pause-tag hidden" id="pause-tag"><div class="pause-card"><small>BATALLA CIO</small><h2>EN PAUSA</h2><button type="button" id="resume" class="btn btn-gold">CONTINUAR ▶</button><button type="button" id="back-from-pause" class="btn btn-outline">SALIR AL MENÚ</button></div></div>
+  </section>
+
+  <dialog id="help-dialog" class="help-dialog"><div class="help-content"><button type="button" id="help-close" class="help-close">✕</button><h2>CONTROLES</h2><div><strong>JUGADOR 1</strong><p>A / D mover · W saltar · S agacharse<br>J rápido · K fuerte · L patada · I bloquear · U especial · SHIFT + dirección: DASH</p></div><div><strong>JUGADOR 2</strong><p>← / → mover · ↑ saltar · ↓ agacharse<br>1 rápido · 2 fuerte · 3 patada · 0 bloquear · 4 especial · SHIFT + flechas: DASH</p></div><div><strong>MÓVIL</strong><p>Activa Pantalla Completa desde el inicio cuando esté disponible. Se recomienda horizontal. Mueve el joystick virtual a izquierda/derecha; arriba salta y abajo se agacha. Los botones flotantes permiten ataques simultáneos, bloqueo, especial y DASH. Versus local: mejor con mandos o teclado.</p></div><div><strong>GENERAL</strong><p>ESC pausa · M sonido · H cajas de impacto · ENTER revancha</p></div><button type="button" id="help-play" class="btn btn-gold">ENTENDIDO</button></div></dialog>
+</main><script src="combat-core.js"></script><script src="audio-engine.js"></script><script src="net-config.js"></script><script src="online-client.js"></script><script src="game.js"></script></body></html>
